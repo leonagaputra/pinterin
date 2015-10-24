@@ -52,6 +52,66 @@ class Human extends CI_Model{
         }
         return FALSE;
     } 
+    
+    public function get_user($year){
+        $sql = "SELECT date_format(DCREA, '%Y-%m') as BULAN, count(date_format(DCREA, '%Y-%m')) as JUMLAH
+            FROM `mstuser`
+            where date_format(DCREA, '%Y') = '".$year."'
+            group by date_format(DCREA, '%Y-%m')";
+        
+        if($query = $this->db->query($sql))
+        {
+            //echo $this->db->last_query();exit;
+            if($query->num_rows() > 0)
+            {                
+                return $query->result();
+            }
+        }
+        return FALSE;        
+    }
+    
+    public function get_transaction($year){
+        $sql = "SELECT date_format(DCREA, '%Y-%m') as BULAN, count(date_format(DCREA, '%Y-%m')) as JUMLAH
+            FROM `hdrpinterin`
+            where date_format(DCREA, '%Y') = '".$year."'
+            group by date_format(DCREA, '%Y-%m')";
+        
+        if($query = $this->db->query($sql))
+        {
+            //echo $this->db->last_query();exit;
+            if($query->num_rows() > 0)
+            {                
+                return $query->result();
+            }
+        }
+        return FALSE;        
+    }
+    
+    public function get_community_transaction($year){
+        $sql = "SELECT date_format(h.DCREA, '%Y-%m') as BULAN, J.COM_ID, J.VNAMA, count(date_format(h.DCREA, '%Y-%m')) as JUMLAH
+                FROM
+                  hdrpinterin h
+                INNER JOIN
+                (
+                  SELECT u.ID, c.ID AS COM_ID, c.VNAMA FROM
+                  mstuser u
+                  INNER JOIN mstcommunity c ON u.MSTCOMMUNITY_ID = c.ID
+                ) J
+                 ON J.ID = h.VCREA
+                WHERE date_format(h.DCREA, '%Y') = '".$year."'
+                GROUP BY date_format(h.DCREA, '%Y-%m'), J.VNAMA
+                ORDER BY date_format(h.DCREA, '%Y-%m'), J.COM_ID;";
+        
+        if($query = $this->db->query($sql))
+        {
+            //echo $this->db->last_query();exit;
+            if($query->num_rows() > 0)
+            {                
+                return $query->result();
+            }
+        }
+        return FALSE;        
+    }
 
     public function update($id, $data, $table = NULL, $dtl_id = NULL, $hdrfield = NULL, $dtlfield = NULL)
     {

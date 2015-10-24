@@ -5,7 +5,8 @@
     <!-- AdminLTE App -->
     <script src="<?php echo $base_url; ?>js/app.min.js?v=<?php echo $version; ?>"></script>
     <script src="<?php echo $base_url; ?>js/main_function.js?v=<?php echo $version; ?>"></script>
-    <script src="<?php echo $base_url; ?>js/chartjs/Chart.min.js"></script>
+    <script src="<?php echo $base_url; ?>js/map_function.js?v=<?php echo $version; ?>"></script>
+    <script src="<?php echo $base_url; ?>js/chartjs/Chart.min.js?v=<?php echo $version; ?>"></script>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByyxX18XFz-_JSIX3canlCp3oUB3EqVPg&callback=initMap"
         async defer></script>
@@ -20,5 +21,12 @@
     <script>
         $(document).ready(function(){
            pieChart(); 
+           barChart();
+           barChartCommunity();
+           //addFirstMarker();
+           window.setTimeout(function () {
+               //console.log('test');
+                addFirstMarker();
+            }, 10000);
         });
     </script>

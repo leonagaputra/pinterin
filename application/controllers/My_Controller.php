@@ -48,8 +48,9 @@ class My_Controller extends CI_Controller {
 
     function set_json($array) {
 //		$this->output->set_header('Content-type: text/json');
-        $this->output->set_header('Content-type: application/json');
-        $this->output->set_output(json_encode($array));
+        //$this->output->set_header('Content-type: application/json');
+        //$this->output->set_output(json_encode($array));
+        echo json_encode($array);
     }
 
     function download_file($fullPath) {

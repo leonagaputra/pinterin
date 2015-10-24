@@ -47,7 +47,7 @@ class Gen_model extends CI_Model{
         }
 
         if($query = $this->db->get())
-        {
+        { //echo $this->db->last_query();exit;
             if($query->num_rows() > 0)
             {
                 if($single)return $query->row();

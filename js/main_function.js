@@ -1,4 +1,3 @@
-var map;
 var main = {
     base_url: null,
     base_app: null,
@@ -241,6 +240,38 @@ function initMap() {
         var center = map.getCenter();
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
+    });
+    
+    var ctaLayer = new google.maps.KmlLayer({
+        url: 'http://localhost/pinterin/kml/INA_PROP.kml',
+        map: map
+      });
+    
+//    var marker = new google.maps.Marker({
+//        position: {lat:-6.17539, lng:106.82715},
+//        map: map,
+//        title: 'Hello World!'
+//      });
+
+}
+
+function press_login(){
+    $.ajax({
+        type: "POST",
+        data:"user="+$("#email").val()+"&password="+$("#password").val(),
+        dataType: "html",
+        url: main.base_url + "index.php/main/login",
+        success: function (msg) {
+            //console.log(msg);
+            var respon = $.parseJSON(msg);
+            if(respon.status == 0){
+                $("#login_gagal").show();
+            } else if(respon.status == 1){
+                //alert('sukses');
+                $("#login_form").submit();
+            }
+            //console.log(respon);
+        }
     });
 }
 
